@@ -1,4 +1,4 @@
-# Mathematik1 Quiz Application
+# MC Quiz Application
 
 A comprehensive Java application for practicing Multiple Choice questions based on Mathematik1 course content.
 
@@ -15,7 +15,7 @@ A comprehensive Java application for practicing Multiple Choice questions based 
 
 ✅ **Multiple Quiz Modes**:
 - Full quiz (all questions)
-- Random quiz (20 questions)
+- Random quiz (8 questions)
 - Topic-specific quizzes
 
 ✅ **Interactive GUI**: User-friendly interface with progress tracking
