@@ -13,13 +13,12 @@ public class QuizApp extends JFrame {
     private List<Question> currentQuiz;
     private int currentQuestionIndex;
     private int score;
-    private Map<Integer, Integer> userAnswers;
+    private Map<Integer, java.util.Set<Integer>> userAnswers;
     
     // UI Components
     private JLabel topicLabel;
     private JLabel questionLabel;
-    private JRadioButton[] optionButtons;
-    private ButtonGroup optionGroup;
+    private JCheckBox[] optionButtons;
     private JButton nextButton;
     private JButton previousButton;
     private JButton submitButton;
@@ -64,8 +63,7 @@ public class QuizApp extends JFrame {
         questionLabel = new JLabel();
         questionLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         
-        optionButtons = new JRadioButton[4];
-        optionGroup = new ButtonGroup();
+        optionButtons = new JCheckBox[4];
         
         questionPanel.add(topicLabel);
         questionPanel.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -73,9 +71,8 @@ public class QuizApp extends JFrame {
         questionPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         
         for (int i = 0; i < 4; i++) {
-            optionButtons[i] = new JRadioButton();
+            optionButtons[i] = new JCheckBox();
             optionButtons[i].setFont(new Font("Arial", Font.PLAIN, 13));
-            optionGroup.add(optionButtons[i]);
             questionPanel.add(optionButtons[i]);
             questionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         }
@@ -146,9 +143,9 @@ public class QuizApp extends JFrame {
             startDialog.dispose();
         });
         
-        JButton startRandomBtn = createMenuButton("Random Quiz (20 Questions)");
+        JButton startRandomBtn = createMenuButton("Random Quiz (6 Questions)");
         startRandomBtn.addActionListener(e -> {
-            startQuiz(questionBank.getRandomQuestions(20));
+            startQuiz(questionBank.getRandomQuestions(6));
             startDialog.dispose();
         });
         
@@ -258,10 +255,13 @@ public class QuizApp extends JFrame {
         }
         
         // Restore previous answer if exists
+        for (int i = 0; i < 4; i++) {
+            optionButtons[i].setSelected(false);
+        }
         if (userAnswers.containsKey(currentQuestionIndex)) {
-            optionButtons[userAnswers.get(currentQuestionIndex)].setSelected(true);
-        } else {
-            optionGroup.clearSelection();
+            for (Integer idx : userAnswers.get(currentQuestionIndex)) {
+                if (idx >= 0 && idx < 4) optionButtons[idx].setSelected(true);
+            }
         }
         
         progressLabel.setText("Question " + (currentQuestionIndex + 1) + 
@@ -290,11 +290,17 @@ public class QuizApp extends JFrame {
     }
     
     private void saveCurrentAnswer() {
+        java.util.Set<Integer> selected = new java.util.HashSet<>();
         for (int i = 0; i < 4; i++) {
             if (optionButtons[i].isSelected()) {
-                userAnswers.put(currentQuestionIndex, i);
-                break;
+                selected.add(i);
             }
+        }
+        if (!selected.isEmpty()) {
+            userAnswers.put(currentQuestionIndex, selected);
+        } else {
+            // Allow empty selection (none selected) to be stored explicitly
+            userAnswers.put(currentQuestionIndex, new java.util.HashSet<>());
         }
     }
     
@@ -318,10 +324,9 @@ public class QuizApp extends JFrame {
     private void calculateScore() {
         score = 0;
         for (int i = 0; i < currentQuiz.size(); i++) {
-            if (userAnswers.containsKey(i)) {
-                if (currentQuiz.get(i).isCorrect(userAnswers.get(i))) {
-                    score++;
-                }
+            java.util.Set<Integer> ans = userAnswers.get(i);
+            if (currentQuiz.get(i).isCorrect(ans)) {
+                score++;
             }
         }
     }
@@ -411,28 +416,24 @@ public class QuizApp extends JFrame {
                              q.getQuestionText() + "</body></html>");
         
         String[] options = q.getOptions();
+        java.util.Set<Integer> correct = q.getCorrectAnswerIndices();
+        java.util.Set<Integer> selected = userAnswers.getOrDefault(currentQuestionIndex, new java.util.HashSet<>());
         for (int i = 0; i < 4; i++) {
             optionButtons[i].setText((char)('A' + i) + ") " + options[i]);
             optionButtons[i].setEnabled(false);
-            
-            // Highlight correct and incorrect answers
-            if (i == q.getCorrectAnswerIndex()) {
+            optionButtons[i].setSelected(selected.contains(i));
+            // Default style
+            optionButtons[i].setForeground(Color.BLACK);
+            optionButtons[i].setFont(new Font("Arial", Font.PLAIN, 13));
+            // Mark correct answers in green
+            if (correct.contains(i)) {
                 optionButtons[i].setForeground(new Color(0, 153, 0));
                 optionButtons[i].setFont(new Font("Arial", Font.BOLD, 13));
-            } else {
-                optionButtons[i].setForeground(Color.BLACK);
-                optionButtons[i].setFont(new Font("Arial", Font.PLAIN, 13));
             }
-            
-            if (userAnswers.containsKey(currentQuestionIndex) && 
-                userAnswers.get(currentQuestionIndex) == i && 
-                i != q.getCorrectAnswerIndex()) {
+            // Mark wrong selected answers in red
+            if (selected.contains(i) && !correct.contains(i)) {
                 optionButtons[i].setForeground(Color.RED);
             }
-        }
-        
-        if (userAnswers.containsKey(currentQuestionIndex)) {
-            optionButtons[userAnswers.get(currentQuestionIndex)].setSelected(true);
         }
         
         explanationArea.setText(q.getExplanation());

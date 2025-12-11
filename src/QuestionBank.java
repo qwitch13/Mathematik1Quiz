@@ -135,8 +135,19 @@ public class QuestionBank {
         for (String topic : byTopic.keySet()) {
             writer.write("\n" + topic + ":\n");
             for (Question q : byTopic.get(topic)) {
-                char answer = (char)('A' + q.getCorrectAnswerIndex());
-                writer.write("  Q" + questionNum + ": " + answer + "\n");
+                java.util.Set<Integer> answers = q.getCorrectAnswerIndices();
+                if (answers.isEmpty()) {
+                    writer.write("  Q" + questionNum + ": (no correct options)\n");
+                } else {
+                    StringBuilder letters = new StringBuilder();
+                    boolean first = true;
+                    for (Integer idx : new java.util.TreeSet<>(answers)) {
+                        if (!first) letters.append(", ");
+                        letters.append((char)('A' + idx));
+                        first = false;
+                    }
+                    writer.write("  Q" + questionNum + ": " + letters + "\n");
+                }
                 writer.write("     Explanation: " + q.getExplanation() + "\n\n");
                 questionNum++;
             }
