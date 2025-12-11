@@ -7,12 +7,15 @@ echo "  Mathematik1 Quiz Application"
 echo "======================================"
 echo ""
 
-# Navigate to src directory
-cd "$(dirname "$0")/src"
+# Navigate to project directory
+cd "$(dirname "$0")"
+
+# Create bin directory if it doesn't exist
+mkdir -p bin
 
 # Compile all Java files
 echo "Compiling Java files..."
-javac *.java
+javac -d bin src/*.java
 
 # Check if compilation was successful
 if [ $? -eq 0 ]; then
@@ -20,9 +23,9 @@ if [ $? -eq 0 ]; then
     echo ""
     echo "Starting Quiz Application..."
     echo ""
-    
+
     # Run the application
-    java QuizApp
+    java -cp bin QuizApp
 else
     echo "✗ Compilation failed. Please check for errors."
     exit 1

@@ -8,9 +8,37 @@ public class QuestionBank {
     private List<Question> questions;
     private Map<String, List<Question>> questionsByTopic;
 
+    private static final String PERSISTENCE_FILE = "questions_data.csv";
+
     public QuestionBank() {
         questions = new ArrayList<>();
         questionsByTopic = new HashMap<>();
+        loadFromPersistence();
+    }
+
+    /**
+     * Load questions from persistence file on startup
+     */
+    private void loadFromPersistence() {
+        File file = new File(PERSISTENCE_FILE);
+        if (file.exists()) {
+            try {
+                importFromCSV(PERSISTENCE_FILE);
+            } catch (IOException e) {
+                System.err.println("Could not load persistence file: " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Save all questions to persistence file
+     */
+    public void saveToPersistence() {
+        try {
+            exportToCSV(PERSISTENCE_FILE);
+        } catch (IOException e) {
+            System.err.println("Could not save to persistence file: " + e.getMessage());
+        }
     }
 
     public void addQuestion(Question question) {
@@ -41,37 +69,67 @@ public class QuestionBank {
      */
     public void importFromCSV(String filename) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filename));
+        StringBuilder content = new StringBuilder();
         String line;
-        int lineNumber = 0;
-        
+
+        // Read entire file content
         while ((line = reader.readLine()) != null) {
-            lineNumber++;
-            if (lineNumber == 1 && line.startsWith("topic,")) {
-                continue; // Skip header
-            }
-            
-            try {
-                String[] parts = parseCSVLine(line);
-                if (parts.length < 8) {
-                    System.err.println("Warning: Line " + lineNumber + " has insufficient fields");
-                    continue;
-                }
-                
-                String topic = parts[0];
-                String questionText = parts[1];
-                String[] options = new String[]{parts[2], parts[3], parts[4], parts[5]};
-                int correctIndex = Integer.parseInt(parts[6]);
-                String explanation = parts[7];
-                String difficulty = parts.length > 8 ? parts[8] : "medium";
-                
-                addQuestion(new Question(topic, questionText, options, correctIndex, 
-                                       explanation, difficulty));
-            } catch (Exception e) {
-                System.err.println("Error parsing line " + lineNumber + ": " + e.getMessage());
-            }
+            content.append(line).append("\n");
         }
         reader.close();
-        System.out.println("Imported " + questions.size() + " questions from " + filename);
+
+        String fullContent = content.toString();
+
+        // Check if file has newlines - if not, it's space-separated and needs special handling
+        String[] lines;
+        if (fullContent.split("\n").length <= 2) {
+            // File is on one or two lines - it's space-separated
+            fullContent = fullContent.replace("\n", " ");
+            // Insert newline after difficulty field when followed by a topic name
+            // Pattern: ",difficulty TOPIC" or ",difficultyTOPIC" (sometimes no space)
+            // The structure is: ...,"explanation",(easy|medium|hard)[ ]?Topic...
+            fullContent = fullContent.replaceAll(",(easy|medium|hard)\\s*([A-Za-zÄÖÜäöü])", ",$1\n$2");
+            lines = fullContent.split("\n");
+        } else {
+            lines = fullContent.split("\n");
+        }
+        int lineNumber = 0;
+        int imported = 0;
+
+        for (String record : lines) {
+            lineNumber++;
+            record = record.trim();
+
+            if (record.isEmpty() || record.startsWith("topic,question")) {
+                continue; // Skip header and empty lines
+            }
+
+            try {
+                String[] parts = parseCSVLine(record);
+                if (parts.length < 8) {
+                    continue;
+                }
+
+                String topic = parts[0].trim();
+                String questionText = parts[1].trim();
+                String[] options = new String[]{parts[2].trim(), parts[3].trim(), parts[4].trim(), parts[5].trim()};
+                int correctIndex = Integer.parseInt(parts[6].trim());
+                String explanation = parts[7].trim();
+                String difficulty = parts.length > 8 ? parts[8].trim() : "medium";
+
+                addQuestion(new Question(topic, questionText, options, correctIndex,
+                                       explanation, difficulty));
+                imported++;
+            } catch (Exception e) {
+                // Silently skip malformed lines
+            }
+        }
+        System.out.println("Imported " + imported + " questions from " + filename);
+
+        // Save to persistence if not already loading from persistence
+        if (!filename.equals(PERSISTENCE_FILE)) {
+            saveToPersistence();
+        }
     }
 
     /**

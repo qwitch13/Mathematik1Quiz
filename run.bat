@@ -6,12 +6,15 @@ echo ║    MATHEMATIK 1 QUIZ - Compilation and Startup           ║
 echo ╚══════════════════════════════════════════════════════════╝
 echo.
 
-REM Navigate to source directory
-cd /d "%~dp0\src"
+REM Navigate to project directory
+cd /d "%~dp0"
+
+REM Create bin directory if it doesn't exist
+if not exist "bin" mkdir bin
 
 REM Compile
 echo 📦 Kompiliere Java-Dateien...
-javac *.java
+javac -d bin src\*.java
 
 if %errorlevel% equ 0 (
     echo ✓ Kompilierung erfolgreich!
@@ -19,9 +22,9 @@ if %errorlevel% equ 0 (
     echo 🚀 Starte Quiz...
     echo ════════════════════════════════════════════════════════════
     echo.
-    
+
     REM Run
-    java Mathematik1Quiz
+    java -cp bin QuizApp
 ) else (
     echo ✗ Kompilierung fehlgeschlagen!
     echo Bitte überprüfe die Fehlermeldungen oben.
