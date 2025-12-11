@@ -1,0 +1,31 @@
+topic,question,optionA,optionB,optionC,optionD,correctIndex,explanation,difficulty
+"Algebra - Powers","What is (x³)⁴ equal to?","x⁷","x¹²","x⁶⁴","x³⁴",1,"Using the power rule (aᵇ)ᶜ = aᵇᶜ, we get (x³)⁴ = x³ˣ⁴ = x¹²",easy
+"Algebra - Radicals","Simplify √50","5√2","2√5","25√2","√25",0,"√50 = √(25×2) = √25 × √2 = 5√2",medium
+"Trigonometry - Identities","What is sin²(x) + cos²(x) equal to?","0","1","2","sin(2x)",1,"This is the Pythagorean identity: sin²(x) + cos²(x) = 1 for all x. It comes from the unit circle where x² + y² = 1.",easy
+"Trigonometry - Graphs","What is the amplitude of y = 3sin(x)?","1","3","π","2π",1,"The amplitude is the coefficient in front of the sine function. For y = A·sin(x), amplitude = |A| = 3",medium
+"Complex Numbers - Conjugate","If z = 3 + 4i, what is z + z̄ (z plus its conjugate)?","6","8i","6 + 8i","0",0,"z̄ = 3 - 4i, so z + z̄ = (3+4i) + (3-4i) = 6. The imaginary parts cancel out, giving twice the real part.",medium
+"Complex Numbers - Modulus","What is |3 + 4i|?","7","5","25","√7",1,"|z| = √(3² + 4²) = √(9+16) = √25 = 5. This is the distance from origin in the complex plane.",easy
+"Vectors - Scalar Multiplication","If v⃗ = <2, -3>, what is 2v⃗?","<4, -6>","<2, -6>","<4, -3>","<2, -1>",0,"Scalar multiplication: 2<2,-3> = <2×2, 2×(-3)> = <4,-6>. Each component is multiplied by the scalar.",easy
+"Vectors - Addition","What is <1,2> + <3,4>?","<4,6>","<3,6>","<4,2>","<1,4>",0,"Vector addition: add corresponding components. <1,2> + <3,4> = <1+3, 2+4> = <4,6>",easy
+"Vectors - Zero Vector","What is the result of v⃗ - v⃗?","v⃗","2v⃗","0⃗ (zero vector)","undefined",2,"Any vector minus itself equals the zero vector: v⃗ - v⃗ = 0⃗ = <0,0,...,0>",easy
+"Geometry - Distance","What is the distance between points (0,0) and (3,4)?","7","5","√7","12",1,"Using distance formula: d = √((3-0)² + (4-0)²) = √(9+16) = √25 = 5",easy
+"Geometry - Midpoint","What is the midpoint of the segment from (2,4) to (6,8)?","(4,6)","(8,12)","(4,4)","(6,6)",0,"Midpoint formula: ((x₁+x₂)/2, (y₁+y₂)/2) = ((2+6)/2, (4+8)/2) = (4,6)",easy
+"Algebra - Factoring","Factor x² - 9","(x-3)(x-3)","(x+3)(x+3)","(x-3)(x+3)","x(x-9)",2,"This is difference of squares: a² - b² = (a-b)(a+b), so x² - 9 = x² - 3² = (x-3)(x+3)",medium
+"Algebra - Quadratic","What are the solutions to x² - 5x + 6 = 0?","x = 2, 3","x = -2, -3","x = 1, 6","x = -1, -6",0,"Factor: (x-2)(x-3) = 0, so x = 2 or x = 3. Check: 2²-5(2)+6 = 4-10+6 = 0 ✓",medium
+"Trigonometry - Period","What is the period of y = sin(2x)?","2π","π","π/2","4π",1,"For y = sin(bx), period = 2π/|b|. Here b=2, so period = 2π/2 = π. The function completes a cycle twice as fast.",medium
+"Complex Numbers - Imaginary Unit","What is i⁴?","i","-i","1","-1",2,"i² = -1, so i⁴ = (i²)² = (-1)² = 1. Pattern: i, -1, -i, 1, i, -1, -i, 1, ...",medium
+"Complex Numbers - Division","Simplify 1/i","i","-i","1","0",1,"Multiply by i/i: (1/i)×(i/i) = i/i² = i/(-1) = -i. Or: 1/i = i/i² = i/(-1) = -i",medium
+"Vectors - Unit Vector","What is the unit vector in direction of <3,4>?","<3,4>","<1,1>","<3/5, 4/5>","<4/5, 3/5>",2,"Unit vector = v⃗/|v⃗|. |<3,4>| = 5, so û = <3/5, 4/5>. This has magnitude 1.",medium
+"Vectors - Parallel","If u⃗ = <2,3> and v⃗ = <4,6>, what's their relationship?","Perpendicular","Parallel","Neither","Opposite",1,"v⃗ = 2u⃗, so they're parallel. Parallel vectors are scalar multiples of each other.",easy
+"Trigonometry - Special Angles","What is cos(60°)?","1/2","√3/2","√2/2","1",0,"cos(60°) = cos(π/3) = 1/2. This is a standard angle value from the unit circle.",easy
+"Trigonometry - Signs","In which quadrant is sin positive and cos negative?","First (I)","Second (II)","Third (III)","Fourth (IV)",1,"Quadrant II (90° to 180°): sine is positive (y > 0), cosine is negative (x < 0). Remember: All Students Take Calculus.",medium
+"Algebra - Absolute Value","|−5| = ?","5","-5","0","±5",0,"|x| represents distance from zero, always non-negative. |-5| = 5.",easy
+"Algebra - Inequalities","If x < 0, is x² positive or negative?","Negative","Positive","Zero","Could be either",1,"Squaring any real number (except 0) gives a positive result. (-3)² = 9 > 0",easy
+"Complex Numbers - Real Part","What is Re(5 - 3i)?","5","-3","8","2",0,"Re(a + bi) = a. The real part of 5 - 3i is 5.",easy
+"Complex Numbers - Imaginary Part","What is Im(5 - 3i)?","-3","3i","5","-3i",0,"Im(a + bi) = b (the coefficient, not bi). The imaginary part of 5 - 3i is -3.",easy
+"Vectors - Dimension","What is the dimension of vector <1,2,3,4>?","1","2","3","4",3,"Dimension = number of components. <1,2,3,4> has 4 components, so dimension = 4.",easy
+"Trigonometry - Range","What is the range of f(x) = sin(x)?","[0, 1]","[-1, 1]","All real numbers","[0, 2π]",1,"Sine oscillates between -1 and 1. The range is all y-values: [-1, 1].",easy
+"Geometry - Circle","What is the radius of x² + y² = 25?","25","5","√25","2π(5)",1,"Standard form x² + y² = r². Here r² = 25, so r = 5.",easy
+"Algebra - Zero Product Property","If (x-2)(x+3) = 0, what are the solutions?","x = 2, -3","x = -2, 3","x = 2, 3","x = -2, -3",0,"If ab = 0, then a = 0 or b = 0. So x-2 = 0 (x=2) or x+3 = 0 (x=-3).",easy
+"Complex Numbers - Equality","If a+bi = 3+4i, what is a?","3","4","7","3+4i",0,"Two complex numbers are equal if real parts match and imaginary parts match. So a = 3.",easy
+"Vectors - Cross Product Sign","In 3D, what determines the direction of a⃗ × b⃗?","Right-hand rule","Left-hand rule","Length of vectors","Dot product",0,"Use right-hand rule: fingers curl from a⃗ to b⃗, thumb points to a⃗ × b⃗ direction.",medium

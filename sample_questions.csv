@@ -1,0 +1,11 @@
+topic,question,optionA,optionB,optionC,optionD,correctIndex,explanation,difficulty
+"Algebra - Exponent Rules","What is 2³ × 2⁴ equal to?","2⁷","2¹²","2⁶","2⁴",0,"Using the exponent rule a^(b+c) = a^b × a^c, we have 2³ × 2⁴ = 2^(3+4) = 2⁷ = 128",easy
+"Trigonometry - Unit Circle","What are the coordinates at angle π on the unit circle?","(1, 0)","(0, 1)","(-1, 0)","(0, -1)",2,"At angle π (180 degrees), the point on the unit circle is at (-1, 0). cos(π) = -1 and sin(π) = 0",easy
+"Complex Numbers - Operations","What is i² equal to?","1","-1","i","-i",1,"By definition, i is the imaginary unit where i² = -1. This is the fundamental property of complex numbers.",easy
+"Vectors - Magnitude","What is the magnitude of vector <3, 4>?","7","5","25","√7",1,"The magnitude is √(3² + 4²) = √(9 + 16) = √25 = 5. This uses the Pythagorean theorem.",easy
+"Geometry - Pythagorean Theorem","If a right triangle has legs of 5 and 12, what is the hypotenuse?","17","13","15","16",1,"Using a² + b² = c², we get 5² + 12² = 25 + 144 = 169 = 13². So c = 13",medium
+"Algebra - Factoring","What is (a - b)² equal to?","a² - b²","a² + 2ab + b²","a² - 2ab + b²","a² + b²",2,"(a - b)² = (a - b)(a - b) = a² - ab - ab + b² = a² - 2ab + b²",easy
+"Trigonometry - Values","What is sin(π/2)?","0","1/2","√3/2","1",3,"At π/2 (90 degrees), the point on the unit circle is (0, 1). The y-coordinate (sine) is 1.",easy
+"Complex Numbers - Polar Form","In polar form r(cos θ + i sin θ), what does θ represent?","The modulus","The angle (argument)","The real part","The imaginary part",1,"θ is the argument (or angle) measured counterclockwise from the positive real axis to the complex number.",medium
+"Vectors - Dot Product","What does a dot product of 0 indicate?","Parallel vectors","Perpendicular vectors","Equal magnitude","Zero vector",1,"When two non-zero vectors have a dot product of 0, they are perpendicular (orthogonal) to each other.",medium
+"Algebra - Square Roots","Simplify √(4x²)","2x","±2x","2|x|","4x",2,"√(x²) = |x|, so √(4x²) = √4 × √(x²) = 2|x|. The square root function always returns non-negative values.",medium
